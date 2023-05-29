@@ -5,6 +5,7 @@ import edu.uoc.epcsd.user.entities.Alert;
 import edu.uoc.epcsd.user.services.AlertService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Log4j2
@@ -65,7 +70,21 @@ public class AlertController {
         }
     }
 
-    // TODO: add the code for the missing system operations here:
-    // 1. query alerts by product and date
+    // 1. query alerts by product and date in format dd-MM-yyyy
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Alert> getAlertsByProductAndDate(@RequestParam @NotNull Long productId, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws ParseException {
+        log.trace("getAlertsByProductAndDate");
+
+        return alertService.findAlertsByProductAndDate(productId, date);
+    }
+
     // 2. query alerts by user and date interval (all the alerts for the specified user where any day in the interval defined in the parameters is between Alert.from and Alert.to)
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Alert> getAlertsByProductAndDateInterval(@RequestParam @NotNull Long productId, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate secondDate) throws ParseException {
+        log.trace("getAlertsByProductAndDateInterval");
+
+        return alertService.findAlertsByUserAndDateInterval(productId, firstDate, secondDate);
+    }
 }

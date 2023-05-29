@@ -3,6 +3,7 @@ package edu.uoc.epcsd.productcatalog.controllers;
 
 import edu.uoc.epcsd.productcatalog.controllers.dtos.CreateProductRequest;
 import edu.uoc.epcsd.productcatalog.controllers.dtos.GetProductResponse;
+import edu.uoc.epcsd.productcatalog.entities.Category;
 import edu.uoc.epcsd.productcatalog.entities.Product;
 import edu.uoc.epcsd.productcatalog.services.ProductService;
 import lombok.extern.log4j.Log4j2;
@@ -61,16 +62,30 @@ public class ProductController {
         return ResponseEntity.created(uri).body(productId);
     }
 
-    // TODO: add the code for the missing system operations here:
     // 1. remove product (use DELETE HTTP verb). Must remove the associated items
-    // 2. query products by name
-    @GetMapping("/")
+    @DeleteMapping("/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Product> getProductsByName() {
+    public void deleteProduct(@PathVariable @NotNull Long productId) {
+        log.trace("deleteProduct");
+
+        productService.deleteProduct(productId);
+    }
+
+    // 2. query products by name
+    @GetMapping("/byName/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Product> getProductsByName(@PathVariable @NotNull String name) {
         log.trace("getProductsByName");
 
-        return productService.findAll();
+        return productService.findByName(name);
     }
-    // 3. query products by category/subcategory
 
+    // 3. query products by category/subcategory
+    @GetMapping("/byCategory/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Product> getProductsByCategory(@PathVariable @NotNull Long categoryId) {
+        log.trace("getProductsByCategory");
+
+        return productService.findAllByCategory(categoryId);
+    }
 }

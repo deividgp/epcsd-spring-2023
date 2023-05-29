@@ -48,25 +48,25 @@ public class CategoryController {
     }
 
     // 1. query categories by name
-    @GetMapping("/{name}")
+    @GetMapping("/byName/{name}")
     @ResponseStatus(HttpStatus.OK)
     public List<Category> getCategoriesByName(@PathVariable @NotNull String name) {
         log.trace("getCategoriesByName");
 
-        return categoryService.findByName(name);
+        return categoryService.findAllByName(name);
     }
 
     // 2. query categories by description
-    @GetMapping("/{description}")
+    @GetMapping("/byDescription/{description}")
     @ResponseStatus(HttpStatus.OK)
     public List<Category> getCategoriesByDescription(@PathVariable @NotNull String description) {
         log.trace("getCategoriesByDescription");
 
-        return categoryService.findByDescription(description);
+        return categoryService.findAllByDescription(description);
     }
 
     // 3. query categories by parent category (must return all categories under the category specified by the id parameter)
-    @GetMapping("/{parentId}")
+    @GetMapping("/byParent/{parentId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Category> getCategoriesByParent(@PathVariable @NotNull Long parentId) {
         log.trace("getCategoriesByParent");

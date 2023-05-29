@@ -72,4 +72,8 @@ public class ItemService {
 
         return savedItem;
     }
+
+    public void delete(Item item){
+        itemRepository.delete(item);
+    }
 }
