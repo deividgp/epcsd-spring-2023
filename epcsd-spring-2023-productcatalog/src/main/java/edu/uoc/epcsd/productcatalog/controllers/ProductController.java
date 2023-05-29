@@ -64,6 +64,13 @@ public class ProductController {
     // TODO: add the code for the missing system operations here:
     // 1. remove product (use DELETE HTTP verb). Must remove the associated items
     // 2. query products by name
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Product> getProductsByName() {
+        log.trace("getProductsByName");
+
+        return productService.findAll();
+    }
     // 3. query products by category/subcategory
 
 }

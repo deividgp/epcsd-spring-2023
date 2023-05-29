@@ -36,7 +36,19 @@ public class ItemService {
 
     public Item setOperational(String serialNumber, @RequestBody Boolean operational) {
 
-        // TODO: complete this method:
+        Optional<Item> item = itemRepository.findBySerialNumber(serialNumber);
+
+        if (item.isPresent()) {
+            Item auxItem = item.get();
+
+            ItemStatus status = operational ? ItemStatus.OPERATIONAL : ItemStatus.NON_OPERATIONAL;
+            auxItem.setStatus(status);
+            itemRepository.save(auxItem);
+
+            productKafkaTemplate.send(KafkaConstants.PRODUCT_TOPIC + KafkaConstants.SEPARATOR + KafkaConstants.UNIT_AVAILABLE, ProductMessage.builder().productId(auxItem.getProduct().getId()).build());
+        } else {
+            throw new IllegalArgumentException("Could not find the item with serialNumber: " + serialNumber);
+        }
 
         return null;
 

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 
@@ -46,8 +47,30 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(categoryId);
     }
 
-    // TODO: add the code for the missing system operations here:
     // 1. query categories by name
+    @GetMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Category> getCategoriesByName(@PathVariable @NotNull String name) {
+        log.trace("getCategoriesByName");
+
+        return categoryService.findByName(name);
+    }
+
     // 2. query categories by description
+    @GetMapping("/{description}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Category> getCategoriesByDescription(@PathVariable @NotNull String description) {
+        log.trace("getCategoriesByDescription");
+
+        return categoryService.findByDescription(description);
+    }
+
     // 3. query categories by parent category (must return all categories under the category specified by the id parameter)
+    @GetMapping("/{parentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Category> getCategoriesByParent(@PathVariable @NotNull Long parentId) {
+        log.trace("getCategoriesByParent");
+
+        return categoryService.findByParent(parentId);
+    }
 }
