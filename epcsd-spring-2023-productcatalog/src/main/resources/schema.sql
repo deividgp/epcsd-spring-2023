@@ -1,10 +1,10 @@
-INSERT INTO category (id, name, description, parent_id)
-VALUES (1, 'Cámaras', 'Cámaras', null)
-     , (2, 'Cámaras de Fotos', 'Cámaras de Fotos', 1)
-     , (3, 'Cámaras de Video', 'Cámaras de Video', 1)
-     , (4, 'Iluminación', 'Todo tipo de accesorios de iluminación', null)
-     , (5, 'Focos', 'Focos direccionales, omnidireccionales, etc.', 4)
-     , (6, 'Difusores', 'Difusores para focos', 4)
+INSERT INTO category (name, description, parent_id)
+VALUES ('Cámaras', 'Cámaras', null)
+     , ('Cámaras de Fotos', 'Cámaras de Fotos', 1)
+     , ('Cámaras de Video', 'Cámaras de Video', 1)
+     , ('Iluminación', 'Todo tipo de accesorios de iluminación', null)
+     , ('Focos', 'Focos direccionales, omnidireccionales, etc.', 4)
+     , ('Difusores', 'Difusores para focos', 4)
 ;
 
 INSERT INTO product (name, description, daily_price, brand, model, category_id)

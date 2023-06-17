@@ -46,12 +46,10 @@ public class ItemService {
             itemRepository.save(auxItem);
 
             productKafkaTemplate.send(KafkaConstants.PRODUCT_TOPIC + KafkaConstants.SEPARATOR + KafkaConstants.UNIT_AVAILABLE, ProductMessage.builder().productId(auxItem.getProduct().getId()).build());
+            return auxItem;
         } else {
             throw new IllegalArgumentException("Could not find the item with serialNumber: " + serialNumber);
         }
-
-        return null;
-
     }
     public Item createItem(Long productId, String serialNumber) {
 

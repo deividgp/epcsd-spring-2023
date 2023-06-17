@@ -70,8 +70,8 @@ public class AlertController {
         }
     }
 
-    // 1. query alerts by product and date in format dd-MM-yyyy
-    @GetMapping("/")
+    // 1. query alerts by product and date
+    @GetMapping("/byProductAndDate")
     @ResponseStatus(HttpStatus.OK)
     public List<Alert> getAlertsByProductAndDate(@RequestParam @NotNull Long productId, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) throws ParseException {
         log.trace("getAlertsByProductAndDate");
@@ -80,11 +80,11 @@ public class AlertController {
     }
 
     // 2. query alerts by user and date interval (all the alerts for the specified user where any day in the interval defined in the parameters is between Alert.from and Alert.to)
-    @GetMapping("/")
+    @GetMapping("/byUserAndDateInterval")
     @ResponseStatus(HttpStatus.OK)
-    public List<Alert> getAlertsByProductAndDateInterval(@RequestParam @NotNull Long productId, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate secondDate) throws ParseException {
-        log.trace("getAlertsByProductAndDateInterval");
+    public List<Alert> getAlertsByUserAndDateInterval(@RequestParam @NotNull Long userId, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDate, @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate secondDate) throws ParseException {
+        log.trace("getAlertsByUserAndDateInterval");
 
-        return alertService.findAlertsByUserAndDateInterval(productId, firstDate, secondDate);
+        return alertService.findAlertsByUserAndDateInterval(userId, firstDate, secondDate);
     }
 }

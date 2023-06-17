@@ -60,6 +60,7 @@ public class ItemController {
     //  * must ensure the item exists
     //  * if the new status is OPERATIONAL, must send a UNIT_AVAILABLE message to the kafka message queue (see ItemService.createItem method)
     @PatchMapping("/{serialNumber}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> setOperational(@PathVariable @NotNull String serialNumber, @RequestBody boolean operational) {
         log.trace("setOperational");
 
